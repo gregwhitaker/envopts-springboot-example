@@ -1,0 +1,42 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
+plugins {
+    id "idea"
+    id "java"
+    id "org.springframework.boot"           version "2.2.4.RELEASE"
+    id "io.spring.dependency-management"    version "1.0.9.RELEASE"
+    id "com.github.hierynomus.license"      version "0.14.0"
+    id "com.bmuschko.docker-remote-api"     version "3.4.4"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-webflux') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'com.lmax:disruptor:3.4.2'
+    implementation 'com.github.gregwhitaker:envopts:1.0.0'
+}
+
+// Docker
+task docker(type: DockerBuildImage, dependsOn: build) {
+    buildArgs = ['JAR_FILE': "${bootJar.getArchiveFileName().get()}"]
+    dockerFile = file("${projectDir}/Dockerfile")
+    inputDir = file("${projectDir}")
+    tags = ["envopts/${projectDir.name}", "envopts/${projectDir.name}:${version}"]
+}
+
+// Spring Boot
+bootRun {
+    systemProperty 'spring.profiles.active', 'local'
+}
