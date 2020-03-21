@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
-
+<Configuration status="INFO">
     <Appenders>
-        <Appender type="Console" name="STDOUT">
-            <Layout type="PatternLayout" pattern="[log4j2.xml] %m MDC%X%n"/>
-        </Appender>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[log4j2.xml] [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
     </Appenders>
-
     <Loggers>
-        <Logger name="envopts.example" level="debug" additivity="false">
-            <AppenderRef ref="STDOUT"/>
-        </Logger>
-
-
-        <Root level="error">
-            <AppenderRef ref="STDOUT"/>
+        <Root level="info" additivity="false">
+            <AppenderRef ref="console" />
         </Root>
     </Loggers>
-
 </Configuration>
