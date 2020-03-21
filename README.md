@@ -9,7 +9,13 @@ Run the following command to build the example application as a Docker image:
 ## Running the Example
 Follow the steps below to run the example application:
 
-* TBD
+* Run the following command to start the example application:
+
+        docker run -p 8080:8080 envopts/envopts-springboot-example
+
+* Next, run the following command to start the application and specify a `local` Spring profile and a different log4j configuration file using the `ENV_OPTS` environment variable:
+
+        docker run -e ENV_OPTS="-Dspring.profiles.active='local',-Dlog4j.configurationFile=log4j2-local.xml" -p 8080:8080 envopts/envopts-springboot-example
 
 ## Bugs and Feedback
 For bugs, questions, and discussions please use the [Github Issues](https://github.com/gregwhitaker/envopts-springboot-example/issues).

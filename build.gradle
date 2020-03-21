@@ -5,13 +5,11 @@ plugins {
     id "java"
     id "org.springframework.boot"           version "2.2.4.RELEASE"
     id "io.spring.dependency-management"    version "1.0.9.RELEASE"
-    id "com.github.hierynomus.license"      version "0.14.0"
     id "com.bmuschko.docker-remote-api"     version "3.4.4"
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
-
+group = 'com.github.gregwhitaker'
+version = '1.0.0'
 sourceCompatibility = 1.8
 
 repositories {
@@ -29,7 +27,7 @@ dependencies {
 }
 
 // Docker
-task docker(type: DockerBuildImage, dependsOn: build) {
+task buildImage(type: DockerBuildImage, dependsOn: build) {
     buildArgs = ['JAR_FILE': "${bootJar.getArchiveFileName().get()}"]
     dockerFile = file("${projectDir}/Dockerfile")
     inputDir = file("${projectDir}")
